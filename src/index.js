@@ -22,7 +22,7 @@ load.addEventListener('click', onLoad);
 async function onSearch(evt) {
     evt.preventDefault();
 
-    query = evt.currentTarget.elements.searchQuery.value.trim();
+    const query = evt.currentTarget.elements.searchQuery.value.trim();
     picApiService.searchValue = query;
 
     if (!query) {
