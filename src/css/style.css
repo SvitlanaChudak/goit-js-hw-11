@@ -10,6 +10,13 @@ body {
     background-color: #262f34;
     color: white;
     line-height: 1.5;
+    font-size: 12px;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: 200px;
 }
 
 #search-box {
@@ -56,4 +63,41 @@ body {
 .btn:focus {
     background: #90afc5;
     color: black;
+}
+
+.load-more {
+    display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    margin-top: 10px;
+    width: 100px;
+        height: 24px;
+        border-radius: 20px;
+        text-align: center;
+        border: none;
+        color: white;
+        background: #1b4b5a
+        
+}
+
+.load-more:hover,
+.load-more:focus {
+    background: #90afc5;
+    color: black;
+}
+
+.info {
+    display: flex;
+    margin-top: 5px;
+    gap: 5px;
+}
+
+.photo-card {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 300px;
+    padding: 12px;
 }

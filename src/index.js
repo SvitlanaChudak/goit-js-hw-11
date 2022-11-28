@@ -44,7 +44,6 @@ async function onSearch(evt) {
             const Showload = picApiService.fetchPic();
             const totalHits = picApiService.fetchPic();
             if (Showload) {
-            
             Notify.success(`Hooray! We found ${totalHits} images.`)
             load.classList.remove('is-hidden');
             
