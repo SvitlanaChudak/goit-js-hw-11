@@ -7,8 +7,8 @@ body {
         Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #fafafa;
-    color: #212121;
+    background-color: #262f34;
+    color: white;
     line-height: 1.5;
 }
 
@@ -21,6 +21,7 @@ body {
 
 .search-form {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .load-more.is-hidden {
@@ -31,4 +32,28 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
+}
+
+.photo-card {
+    background-color: #615049;
+    padding: 10px;
+    border-radius: 3px;
+    border: 3px solid white;
+}
+
+.btn {
+    width: 75px;
+    height: 24px;
+    border-radius: 20px;
+    text-align: center;
+    border: none;
+    color: white;
+    background: #1b4b5a
+}
+
+.btn:hover,
+.btn:focus {
+    background: #90afc5;
+    color: black;
 }

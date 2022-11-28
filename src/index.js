@@ -10,30 +10,46 @@ const load = document.querySelector('.load-more');
 
 const picApiService = new PicApiService();
 
+const simplelightbox = new SimpleLightbox('.gallery-item', {
+  captionDelay: 250,
+  captionsData: 'alt',
+  enableKeyboard: true,
+});
+
 form.addEventListener('submit', onSearch);
 load.addEventListener('click', onLoad);
 
 async function onSearch(evt) {
     evt.preventDefault();
 
-    const { elements: { searchQuery }, } = evt.currentTarget;
-    const query = searchQuery.value.trim();
+    query = evt.currentTarget.elements.searchQuery.value.trim();
+    picApiService.searchValue = query;
 
     if (!query) {
-        return Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        Notify.info('Empty request');
+        gallery.innerHTML = '';
+        load.classList.add('is-hidden');
+        return
     }
-    picApiService.resetPage();
-    gallery.innerHTML = '';
+        picApiService.resetPage();
     load.classList.add('is-hidden');
-    picApiService.searchValue = query;
-    try {
-        const hits = await picApiService.fetchPic();
-        createMarkup(hits);
-        const Showload = picApiService.fetchPic();
-        if (Showload) {
-            load.classList.remove('is-hidden');
+    
+        try {
+            const hits = await picApiService.fetchPic();
+        if (!hits.length) {
+            Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+            return
         }
-    } catch (error) {}
+        createMarkup(hits);
+            const Showload = picApiService.fetchPic();
+            const totalHits = picApiService.fetchPic();
+            if (Showload) {
+            
+            Notify.success(`Hooray! We found ${totalHits} images.`)
+            load.classList.remove('is-hidden');
+            
+        }
+    } catch (error) {Notify.failure(`${error}`);}
 }
 
 const simpleligthbox = new SimpleLightbox('.gallery-item', {
@@ -48,6 +64,7 @@ function createMarkup(data) {
     let markup = data
         .map(item => {
             return `
+  
     <div class="photo-card">
     <a class="gallery-item" href="${item.largeImageURL}">
   <img src="${item.webformatURL}" alt="${item.tags}" width="300" loading="lazy" />
@@ -72,7 +89,7 @@ function createMarkup(data) {
     simpleligthbox.refresh()
 }
 
-async function onLoad(evt) {
+async function onLoad() {
   picApiService.incrementPage();
   const Showload = picApiService.getMorePics();
   if (!Showload) {
@@ -82,7 +99,7 @@ async function onLoad(evt) {
     const hits = await picApiService.fetchPic();
     console.log(hits);
     createMarkup(hits);
-  } catch (error) {}
+  } catch (error) {Notify.failure(`${error}`);}
 }
 
 
