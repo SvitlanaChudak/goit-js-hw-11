@@ -35,14 +35,13 @@ async function onSearch(evt) {
     load.classList.add('is-hidden');
     
         try {
-            const hits = await picApiService.fetchPic();
+            const { hits, totalHits } = await picApiService.fetchPic();
         if (!hits.length) {
             Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return
         }
-        createMarkup(hits);
-            const Showload = picApiService.fetchPic();
-            const totalHits = picApiService.fetchPic();
+            createMarkup(hits);
+            const Showload = picApiService.getMorePics();
             if (Showload) {
             Notify.success(`Hooray! We found ${totalHits} images.`)
             load.classList.remove('is-hidden');

@@ -14,7 +14,7 @@ export class PicApiService {
 
             const response = await axios.get(url);
             this.totalHits = response.data.totalHits;
-            return (response.data.hits);
+            return (response.data);
     }
     
   get value() {
