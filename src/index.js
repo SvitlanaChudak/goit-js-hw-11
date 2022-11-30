@@ -10,12 +10,6 @@ const load = document.querySelector('.load-more');
 
 const picApiService = new PicApiService();
 
-const simplelightbox = new SimpleLightbox('.gallery-item', {
-  captionDelay: 250,
-  captionsData: 'alt',
-  enableKeyboard: true,
-});
-
 form.addEventListener('submit', onSearch);
 load.addEventListener('click', onLoad);
 
@@ -33,20 +27,22 @@ async function onSearch(evt) {
     }
         picApiService.resetPage();
     load.classList.add('is-hidden');
-    gallery.innerHTML = '';
+  gallery.innerHTML = '';
+
         try {
-            const { hits, totalHits } = await picApiService.fetchPic();
+          const { hits, totalHits } = await picApiService.fetchPic();
+
         if (!hits.length) {
             Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             return
         }
-            createMarkup(hits);
+          createMarkup(hits);
             const Showload = picApiService.getMorePics();
             if (Showload) {
             Notify.success(`Hooray! We found ${totalHits} images.`)
-            load.classList.remove('is-hidden');
-            
-        }
+              load.classList.remove('is-hidden');
+          }
+
     } catch (error) {Notify.failure(`${error}`);}
 }
 
@@ -62,7 +58,6 @@ function createMarkup(data) {
     let markup = data
         .map(item => {
             return `
-  
     <div class="photo-card">
     <a class="gallery-item" href="${item.largeImageURL}">
   <img src="${item.webformatURL}" alt="${item.tags}" width="300" loading="lazy" />
@@ -90,37 +85,32 @@ function createMarkup(data) {
 async function onLoad() {
   picApiService.incrementPage();
   const Showload = picApiService.getMorePics();
+
   if (!Showload) {
     load.classList.add('is-hidden');
+    Notify.info("We're sorry, but you've reached the end of search results.");
   }
   try {
     const { hits } = await picApiService.fetchPic();
     console.log(hits);
-      createMarkup(hits);
-      
+    createMarkup(hits);
+
+    if (picApiService.page > 1) {
+      smoothScroll();
+    }
+    
   } catch (error) {Notify.failure(`${error}`);}
 }
 
-    // if (Showload < totalHits) {
-    //   load.classList.remove('is-hidden');
-    // } else {
-    //   load.classList.add('is-hidden');
-    //   Notify.info(
-    //     `We are sorry, but you have reached the end of search results.`
-    //   );
-    // }
+    function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
 
-//     function smoothScroll() {
-//   const { height: cardHeight } = document
-//     .querySelector('.gallery')
-//     .firstElementChild.getBoundingClientRect();
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
 
-//   window.scrollBy({
-//     top: cardHeight * 2,
-//     behavior: 'smooth',
-//   });
-// }
 
-    // if (picApiService.page > 2) {
-    //   smoothScroll();
-    // }
