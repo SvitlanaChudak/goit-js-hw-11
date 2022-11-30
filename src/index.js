@@ -33,7 +33,7 @@ async function onSearch(evt) {
     }
         picApiService.resetPage();
     load.classList.add('is-hidden');
-    
+    gallery.innerHTML = '';
         try {
             const { hits, totalHits } = await picApiService.fetchPic();
         if (!hits.length) {
@@ -94,17 +94,33 @@ async function onLoad() {
     load.classList.add('is-hidden');
   }
   try {
-    const hits = await picApiService.fetchPic();
+    const { hits } = await picApiService.fetchPic();
     console.log(hits);
-    createMarkup(hits);
+      createMarkup(hits);
+      
   } catch (error) {Notify.failure(`${error}`);}
 }
 
+    // if (Showload < totalHits) {
+    //   load.classList.remove('is-hidden');
+    // } else {
+    //   load.classList.add('is-hidden');
+    //   Notify.info(
+    //     `We are sorry, but you have reached the end of search results.`
+    //   );
+    // }
 
+//     function smoothScroll() {
+//   const { height: cardHeight } = document
+//     .querySelector('.gallery')
+//     .firstElementChild.getBoundingClientRect();
 
+//   window.scrollBy({
+//     top: cardHeight * 2,
+//     behavior: 'smooth',
+//   });
+// }
 
-
-
-
-
-
+    // if (picApiService.page > 2) {
+    //   smoothScroll();
+    // }
