@@ -47,9 +47,7 @@ async function onSearch(evt) {
 }
 
 const simpleligthbox = new SimpleLightbox('.gallery-item', {
-    captions: true,
-    captionSelector: "img",
-    captionType: "alt",
+    captionsData: "alt",
     captionDelay: 250,
     captionPosition: "bottom",
 });
